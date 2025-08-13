@@ -1,38 +1,438 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #ffffff;
+  min-height: 100vh;
+  color: #333;
+}
+
 .App {
+  min-height: 100vh;
+  padding: 20px;
+  background: #ffffff;
+}
+
+/* Header styles */
+.App-header {
+  text-align: center;
+  margin-bottom: 40px;
+  color: #333;
+  border-bottom: 2px solid #000;
+  padding-bottom: 20px;
+}
+
+.App-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  font-weight: 300;
+}
+
+.App-header p {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+/* Main content */
+.App-main {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Section styles */
+.section {
+  background: #ffffff;
+  border: 2px solid #000;
+  padding: 30px;
+  margin-bottom: 30px;
+}
+
+.section h2 {
+  color: #000;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.help-text {
+  color: #666;
+  margin-bottom: 20px;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.help-text code {
+  background: #f5f5f5;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'Monaco', 'Menlo', monospace;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.help-text strong {
+  color: #000;
+  font-weight: 600;
+}
+
+/* Email template textarea */
+.email-template {
+  width: 100%;
+  min-height: 200px;
+  padding: 20px;
+  border: 2px solid #000;
+  border-radius: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+  background: #ffffff;
+}
+
+.email-template:focus {
+  outline: none;
+  border-color: #333;
+}
+
+/* Buttons */
+.add-button, .generate-button, .export-button, .copy-button, .add-value-button {
+  background: #ffffff;
+  color: #000;
+  border: 2px solid #000;
+  padding: 12px 24px;
+  border-radius: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-button:hover, .generate-button:hover, .export-button:hover, .copy-button:hover, .add-value-button:hover {
+  background: #000;
+  color: #fff;
+}
+
+.add-value-button {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+}
+
+.generate-button {
+  font-size: 1.2rem;
+  padding: 16px 32px;
+  background: #000;
+  color: #fff;
+}
+
+.generate-button:hover {
+  background: #333;
+}
+
+.generate-button:disabled {
+  background: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  border-color: #ccc;
+}
+
+.generate-section {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.button-help {
+  text-align: center;
+  margin-top: 15px;
+  color: #666;
+  font-style: italic;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.email-count {
+  text-align: center;
+  margin-top: 15px;
+  color: #000;
+  font-weight: 600;
+  font-size: 1.1rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.export-button {
+  background: #ffffff;
+  color: #000;
+  border: 2px solid #000;
+}
+
+.copy-button {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+}
+
+.remove-button, .remove-value-button {
+  background: #ffffff;
+  color: #000;
+  border: 2px solid #000;
+  width: 32px;
+  height: 32px;
+  border-radius: 0;
+  cursor: pointer;
+  font-size: 1rem;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  transition: all 0.2s ease;
 }
 
-.App-link {
-  color: #61dafb;
+.remove-button:hover, .remove-value-button:hover {
+  background: #000;
+  color: #fff;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.remove-value-button {
+  width: 28px;
+  height: 28px;
+  font-size: 0.9rem;
+}
+
+/* Variable section */
+.variable-item {
+  background: #ffffff;
+  border: 2px solid #000;
+  padding: 25px;
+  margin-bottom: 25px;
+}
+
+.variable-header {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.variable-color {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #000;
+  flex-shrink: 0;
+}
+
+.variable-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #000;
+  border-radius: 0;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+  background: #ffffff;
+}
+
+.variable-input:focus {
+  outline: none;
+  border-color: #333;
+}
+
+.variable-preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.preview-label {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.preview-box {
+  background: #f5f5f5;
+  padding: 6px 12px;
+  border: 2px solid #000;
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 0.9rem;
+  color: #000;
+}
+
+/* Variable values section */
+.variable-values {
+  background: #ffffff;
+  border: 2px solid #000;
+  padding: 20px;
+}
+
+.values-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #000;
+}
+
+.values-header h4 {
+  color: #000;
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.values-list {
+  display: grid;
+  gap: 12px;
+}
+
+.value-item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.value-input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 2px solid #000;
+  border-radius: 0;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+  background: #ffffff;
+}
+
+.value-input:focus {
+  outline: none;
+  border-color: #333;
+}
+
+.no-values {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  padding: 20px;
+  background: #f9f9f9;
+  border: 1px dashed #000;
+}
+
+/* Preview section */
+.preview-actions {
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.preview-emails {
+  display: grid;
+  gap: 20px;
+}
+
+.preview-email {
+  background: #ffffff;
+  border: 2px solid #000;
+  padding: 25px;
+}
+
+.email-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #000;
+}
+
+.email-header h3 {
+  color: #000;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.email-content {
+  background: #ffffff;
+  padding: 20px;
+  border: 1px solid #000;
+  line-height: 1.6;
+}
+
+.email-content p {
+  margin-bottom: 8px;
+  color: #000;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .App {
+    padding: 15px;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .App-header h1 {
+    font-size: 2rem;
+  }
+  
+  .section {
+    padding: 20px;
+  }
+  
+  .variable-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .values-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+  
+  .add-value-button {
+    width: 100%;
+  }
+  
+  .value-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .email-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+  
+  .email-header h3 {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .App-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .section {
+    padding: 15px;
+  }
+  
+  .add-button, .generate-button, .export-button {
+    width: 100%;
+  }
+  
+  .variable-preview {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .variable-item {
+    padding: 20px;
+  }
+  
+  .variable-values {
+    padding: 15px;
   }
 }
