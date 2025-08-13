@@ -14,7 +14,8 @@ function App() {
       name: '',
       placeholder: '',
       color: getRandomColor(),
-      values: [] // Array of values for this field
+      values: [], // Array of values for this field
+      multipleInput: '' // Individual multiple input for this variable
     };
     setVariables([...variables, newVar]);
   };
@@ -42,6 +43,26 @@ function App() {
     setVariables(variables.map(v => 
       v.id === variableId 
         ? { ...v, values: [...v.values, { id: Date.now(), text: '' }] }
+        : v
+    ));
+  };
+
+  // Add multiple values from comma-separated input
+  const addMultipleValues = (variableId, commaSeparatedText) => {
+    if (!commaSeparatedText.trim()) return;
+    
+    // Split by comma and clean up each value
+    const values = commaSeparatedText
+      .split(',')
+      .map(text => text.trim())
+      .filter(text => text.length > 0)
+      .map(text => ({ id: Date.now() + Math.random(), text }));
+    
+    if (values.length === 0) return;
+    
+    setVariables(variables.map(v => 
+      v.id === variableId 
+        ? { ...v, values: [...v.values, ...values], multipleInput: '' }
         : v
     ));
   };
@@ -202,12 +223,45 @@ function App() {
               <div className="variable-values">
                 <div className="values-header">
                   <h4>Values for this field:</h4>
-                  <button 
-                    onClick={() => addValueToVariable(variable.id)}
-                    className="add-value-button"
-                  >
-                    + Add Value
-                  </button>
+                  <div className="values-buttons">
+                    <button 
+                      onClick={() => addValueToVariable(variable.id)}
+                      className="add-value-button"
+                    >
+                      + Add Single Value
+                    </button>
+                    <button 
+                      onClick={() => updateVariable(variable.id, 'multipleInput', '')}
+                      className="add-multiple-button"
+                    >
+                      + Add Multiple Values
+                    </button>
+                  </div>
+                </div>
+                
+                {/* Multiple values textarea */}
+                <div className="multiple-values-section">
+                  <textarea
+                    value={variable.multipleInput}
+                    onChange={(e) => updateVariable(variable.id, 'multipleInput', e.target.value)}
+                    placeholder="Enter comma-separated values (e.g., John, Sarah, Mike, Emily)"
+                    className="multiple-values-textarea"
+                  />
+                  <div className="multiple-values-actions">
+                    <button 
+                      onClick={() => addMultipleValues(variable.id, variable.multipleInput)}
+                      className="add-multiple-values-button"
+                      disabled={!variable.multipleInput.trim()}
+                    >
+                      Add Values
+                    </button>
+                    <button 
+                      onClick={() => updateVariable(variable.id, 'multipleInput', '')}
+                      className="clear-multiple-button"
+                    >
+                      Clear
+                    </button>
+                  </div>
                 </div>
                 
                 <div className="values-list">
@@ -233,7 +287,13 @@ function App() {
                 </div>
                 
                 {variable.values.length === 0 && (
-                  <p className="no-values">No values added yet. Click "Add Value" to get started.</p>
+                  <p className="no-values">No values added yet. Use "Add Single Value" or "Add Multiple Values" to get started.</p>
+                )}
+                
+                {variable.values.length > 0 && (
+                  <p className="values-count">
+                    {variable.values.length} value{variable.values.length !== 1 ? 's' : ''} added
+                  </p>
                 )}
               </div>
             </div>
