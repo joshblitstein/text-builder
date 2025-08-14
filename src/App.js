@@ -90,6 +90,17 @@ function App() {
     ));
   };
 
+  // Get a value from a variable with cycling (repeats shorter lists)
+  const getCycledValue = (variable, index) => {
+    if (!variable.values || variable.values.length === 0) {
+      return `[${variable.name || 'Field'}]`;
+    }
+    
+    // Use modulo to cycle through the values
+    const valueIndex = index % variable.values.length;
+    return variable.values[valueIndex].text;
+  };
+
   // Generate preview emails
   const generatePreview = () => {
     if (!emailTemplate || variables.length === 0) {
@@ -113,9 +124,9 @@ function App() {
     for (let i = 0; i < maxValues; i++) {
       let emailContent = emailTemplate;
       
-      // Replace variables with actual values
+      // Replace variables with actual values (with cycling)
       variables.forEach(variable => {
-        const value = variable.values[i]?.text || `[${variable.name || 'Field'}]`;
+        const value = getCycledValue(variable, i);
         const regex = new RegExp(`\\[${variable.name}\\]`, 'g');
         emailContent = emailContent.replace(regex, value);
       });
@@ -158,6 +169,28 @@ function App() {
     const variablesWithValues = variables.filter(v => v.values.length > 0);
     if (variablesWithValues.length === 0) return 0;
     return Math.max(...variablesWithValues.map(v => v.values.length));
+  };
+
+  // Get cycling information for display
+  const getCyclingInfo = () => {
+    if (variables.length === 0) return null;
+    
+    const variablesWithValues = variables.filter(v => v.values.length > 0);
+    if (variablesWithValues.length === 0) return null;
+    
+    const maxValues = Math.max(...variablesWithValues.map(v => v.values.length));
+    const cyclingInfo = [];
+    
+    variables.forEach(variable => {
+      if (variable.values.length > 0) {
+        const cycles = Math.ceil(maxValues / variable.values.length);
+        if (cycles > 1) {
+          cyclingInfo.push(`${variable.name}: ${variable.values.length} values will cycle ${cycles} times`);
+        }
+      }
+    });
+    
+    return cyclingInfo;
   };
 
   return (
@@ -320,9 +353,19 @@ function App() {
             )}
             
             {getTotalEmails() > 0 && (
-              <p className="email-count">
-                This will create <strong>{getTotalEmails()}</strong> personalized emails
-              </p>
+              <div className="email-info">
+                <p className="email-count">
+                  This will create <strong>{getTotalEmails()}</strong> personalized emails
+                </p>
+                {getCyclingInfo() && getCyclingInfo().length > 0 && (
+                  <div className="cycling-info">
+                    <p className="cycling-title">Cycling Information:</p>
+                    {getCyclingInfo().map((info, index) => (
+                      <p key={index} className="cycling-detail">{info}</p>
+                    ))}
+                  </div>
+                )}
+              </div>
             )}
           </div>
         </section>

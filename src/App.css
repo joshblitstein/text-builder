@@ -159,12 +159,42 @@ body {
   font-style: italic;
 }
 
+.email-info {
+  margin-top: 15px;
+}
+
 .email-count {
   text-align: center;
-  margin-top: 15px;
+  margin-bottom: 15px;
   color: #000;
   font-weight: 600;
   font-size: 1.1rem;
+}
+
+.cycling-info {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-top: 15px;
+  text-align: left;
+}
+
+.cycling-title {
+  color: #000;
+  font-weight: 600;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.cycling-detail {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  padding-left: 15px;
+}
+
+.cycling-detail:last-child {
+  margin-bottom: 0;
 }
 
 .export-button {
@@ -474,6 +504,10 @@ body {
   }
   
   .email-header h3 {
+    text-align: center;
+  }
+  
+  .cycling-info {
     text-align: center;
   }
 }
